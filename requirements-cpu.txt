@@ -1,0 +1,10 @@
+# 路线 C：RapidOCR（CPU 兜底，不占显存）
+#
+# 不需要 GPU 时用这条线：CUDA / cuDNN 装不动也能把服务跑起来，
+# 只是没有版面与表格结构还原，输出的是逐行文本。
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.7
+pymupdf>=1.24
+numpy>=1.24
+rapidocr-onnxruntime>=1.3

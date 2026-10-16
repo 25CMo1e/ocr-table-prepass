@@ -1,0 +1,17 @@
+# 路线 A：PP-StructureV3（GPU，首选）
+#
+# paddlepaddle-gpu 不从 PyPI 装，要走官方 CUDA 索引，且版本必须和本机 CUDA 对齐。
+# 本机驱动 560.76 对应 CUDA 12.6，所以单独执行（不要在 requirements 里混着装）：
+#
+#   python -m pip install paddlepaddle-gpu -i https://www.paddlepaddle.org.cn/packages/stable/cu126/
+#
+# 装完先跑 `python check_env.py`（见 README「先探测环境」），确认 paddle 能看到 GPU。
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.7
+pymupdf>=1.24
+numpy>=1.24
+paddleocr>=3.0
+# PP-StructureV3 的真正依赖在这里（只装 paddleocr 会在构造流水线时抛 DependencyError）。
+# 版本要和已装的 paddlex 对齐：python -m pip install "paddlex[ocr]==$(上一步打印的版本)"
+paddlex[ocr]

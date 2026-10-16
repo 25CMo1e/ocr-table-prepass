@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ocr-table-prepass"
+version = "0.1.0"
+description = "PP-StructureV3 表格 OCR 的前置修正层：逐页方向转正 + 跨页残条检测 + 多表格单元格错配补丁"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["ocr", "paddleocr", "pp-structure", "table-recognition", "pdf", "orientation"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Image Recognition",
+  "Topic :: Text Processing :: Markup",
+]
+
+# 核心层（方向 / 残条 / 补丁）刻意保持轻依赖：numpy 与 PyMuPDF 都是"有则生效、
+# 没有就明确跳过"，所以这里一个都不写死。整套 OCR 服务需要的包见 requirements-*.txt。
+dependencies = []
+
+[project.optional-dependencies]
+# 只要库（在自己的流水线里插一层修正）
+lib = ["numpy>=1.24", "pymupdf>=1.24"]
+# 还要跑自带的 HTTP 服务
+service = ["fastapi>=0.115", "uvicorn[standard]>=0.30", "pydantic>=2.7"]
+dev = ["numpy>=1.24"]
+
+[project.scripts]
+ocr-table-prepass = "ocr_table_prepass.__main__:main"
+
+[tool.setuptools]
+packages = ["ocr_table_prepass"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

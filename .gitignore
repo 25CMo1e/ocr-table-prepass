@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.DS_Store
+*.log
+.venv/
+.cache/
+.paddlex/
+.hf_cache/
+build/
+dist/
+*.egg-info/
+tools/probe_orientation.out.txt
